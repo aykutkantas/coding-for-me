@@ -10,7 +10,7 @@ class Profile(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
 	image = models.ImageField(default='default.png', upload_to='profile_pics')
 	slug = AutoSlugField(populate_from='user')
-	bio = models.CharField(max_length=255, blank=True)
+	bio = models.TextField(max_length=10000, blank=True)
 	friends = models.ManyToManyField("Profile", blank=True)
 
 	def __str__(self):
