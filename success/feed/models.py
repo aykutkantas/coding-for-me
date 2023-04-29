@@ -5,8 +5,9 @@ from django.utils import timezone
 
 # This model is for any post that a user posts on the website.
 class Post(models.Model):
-	description = models.CharField(max_length=255, blank=True)
-	pic = models.ImageField(upload_to='path/to/img')
+	title = models.CharField(max_length=255)
+	story = models.TextField(max_length=1000)
+	media = models.ImageField(upload_to='path/to/img', blank=True)
 	date_posted = models.DateTimeField(default=timezone.now)
 	user_name = models.ForeignKey(User, on_delete=models.CASCADE)
 	tags = models.CharField(max_length=100, blank=True)
