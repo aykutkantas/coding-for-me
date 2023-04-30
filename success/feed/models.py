@@ -7,13 +7,13 @@ from django.utils import timezone
 class Post(models.Model):
 	title = models.CharField(max_length=255)
 	story = models.TextField(max_length=10000)
-	media = models.ImageField(upload_to='path/to/img', blank=True)
+	media = models.ImageField(upload_to='posts_img', blank=True)
 	date_posted = models.DateTimeField(default=timezone.now)
 	user_name = models.ForeignKey(User, on_delete=models.CASCADE)
 	tags = models.CharField(max_length=100, blank=True)
 
 	def __str__(self):
-		return self.description
+		return self.title
 
 
 	def get_absolute_url(self):

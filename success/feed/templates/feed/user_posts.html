@@ -16,9 +16,9 @@
       {% for post in posts %}
       <div class="card card-signin my-5">
         <div class="card-body">
-          <a href="{{ post.user_name.profile.get_absolute_url }}"
+          <a href="{{post.user_name.profile.get_absolute_url}}"
             ><img
-              src="{{ post.user_name.profile.image.url }}"
+              src="{{post.user_name.profile.image.url}}"
               class="rounded-circle"
               width="30"
               height="30"
@@ -26,7 +26,7 @@
           /></a>
           <a
             class="text-dark"
-            href="{{ post.user_name.profile.get_absolute_url }}"
+            href="{{post.user_name.profile.get_absolute_url}}"
             ><b>{{ post.user_name }}</b></a
           >
           <br /><small class="text-muted"
@@ -37,7 +37,7 @@
           <p class="card-text text-dark">{{ post.story }}</p>
         </div>
         <a href="{% url 'post-detail' post.id %}"
-          ><img class="card-img-top" src="{{ post.pic.url }}" alt=""
+          ><img class="card-img-top" src="{{post.media.url}}" alt=""
         /></a>
         {% if post.tags %}
         <br />
