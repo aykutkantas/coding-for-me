@@ -36,9 +36,11 @@
           <b class="card-text text-dark">{{ post.title }}</b>
           <p class="card-text text-dark">{{ post.story }}</p>
         </div>
-        <a href="{{post.media.url}}"
-          ><img class="card-img-top" src="{{post.media.url}}" alt=""
-        /></a>
+          {% if post.media %}
+          <img class="card-img-top" src="{{post.media.url}}" alt=""
+        />
+          {% endif %}
+          </a>
         {% if post.tags %}
         <br />
         <p class="text-danger ml-3">
