@@ -35,6 +35,7 @@
           <br /><br />
           <b class="card-text text-dark">{{ post.title }}</b>
           <p class="card-text text-dark">{{ post.story }}</p>
+          <b class="card-text text-dark">{{ post.date }}</b>
         </div>
         <a href="{% url 'post-detail' post.id %}"
           >

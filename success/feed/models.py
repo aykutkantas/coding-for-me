@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.forms import DateInput
 from django.urls import reverse
 from django.utils import timezone
 
@@ -8,6 +9,7 @@ class Post(models.Model):
 	title = models.CharField(max_length=255)
 	story = models.TextField(max_length=10000)
 	media = models.ImageField(upload_to='posts_img', blank=True)
+	date = models.DateField()
 	date_posted = models.DateTimeField(default=timezone.now)
 	user_name = models.ForeignKey(User, on_delete=models.CASCADE)
 	tags = models.CharField(max_length=100, blank=True)
