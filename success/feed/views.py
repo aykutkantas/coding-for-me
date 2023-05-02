@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.urls import reverse
@@ -77,7 +78,7 @@ def create_post(request):
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 	model = Post
-	fields = ['title', 'story', 'date', 'media', 'tags']
+	fields = ['title', 'story', 'date', 'location', 'media', 'tags']
 	template_name = 'feed/create_post.html'
 
 	def form_valid(self, form):

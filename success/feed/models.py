@@ -1,8 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.forms import DateInput
 from django.urls import reverse
 from django.utils import timezone
+from places.fields import PlacesField
+
 
 # This model is for any post that a user posts on the website.
 class Post(models.Model):
@@ -10,9 +11,11 @@ class Post(models.Model):
 	story = models.TextField(max_length=10000)
 	media = models.ImageField(upload_to='posts_img', blank=True)
 	date = models.DateField()
+	location = PlacesField()
 	date_posted = models.DateTimeField(default=timezone.now)
 	user_name = models.ForeignKey(User, on_delete=models.CASCADE)
 	tags = models.CharField(max_length=100, blank=True)
+
 
 	def __str__(self):
 		return self.title
@@ -20,6 +23,7 @@ class Post(models.Model):
 
 	def get_absolute_url(self):
 		return reverse('post-detail', kwargs={'pk': self.pk})
+	
  
 # Comment model links a comment with the post and the user. 
 class Comments(models.Model):
