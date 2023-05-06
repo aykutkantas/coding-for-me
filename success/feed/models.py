@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from django.utils import timezone
 from places.fields import PlacesField
+from ckeditor_uploader.fields import RichTextUploadingField
 #from django_google_maps import fields as map_fields
 #from django_google_maps import widgets as map_widgets
 
@@ -11,8 +12,9 @@ from places.fields import PlacesField
 # This model is for any post that a user posts on the website.
 class Post(models.Model):
 	title = models.CharField(max_length=255)
-	story = models.TextField(max_length=10000)
-	media = models.ImageField(upload_to='posts_img', blank=True)
+	story = RichTextUploadingField(config_name='portal_config')
+	#story = models.TextField(max_length=10000)
+	#media = models.ImageField(upload_to='posts_img', blank=True)
 	start_date= models.DateField()
 	end_date = models.DateField(blank=True)
 	location = PlacesField()
