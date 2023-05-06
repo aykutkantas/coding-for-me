@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'cloudinary',
     'cloudinary_storage',
     'places',
+    'django_google_maps',
 ]
 
 MIDDLEWARE = [
@@ -156,9 +157,10 @@ CLOUDINARY_STORAGE = {
 'API_SECRET':'KrzQ85sllTsD3653LefJX_Y-yxk'
 }
 
-PLACES_MAPS_API_KEY='AIzaSyAquU4Qndrd6E2Twym-us1L18oFT39w39A'
+PLACES_MAPS_API_KEY='AIzaSyDlmWzOETT386SR5lq2ADFMvsejrrycmoE'
 PLACES_MAP_WIDGET_HEIGHT=100
 PLACES_MAP_OPTIONS='{"center": { "lat": 38.971584, "lng": -95.235072 }, "zoom": 10}'
 PLACES_MARKER_OPTIONS='{"draggable": true}'
 
 
+#GOOGLE_MAPS_API_KEY = 'AIzaSyAquU4Qndrd6E2Twym-us1L18oFT39w39A'
