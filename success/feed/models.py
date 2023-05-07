@@ -1,39 +1,21 @@
-#import json
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.utils import timezone
 from places.fields import PlacesField
-from ckeditor_uploader.fields import RichTextUploadingField
-#from django_google_maps import fields as map_fields
-#from django_google_maps import widgets as map_widgets
-
+from ckeditor.fields import RichTextField
 
 # This model is for any post that a user posts on the website.
 class Post(models.Model):
 	title = models.CharField(max_length=255)
-	story = RichTextUploadingField(config_name='portal_config')
-	#story = models.TextField(max_length=10000)
-	#media = models.ImageField(upload_to='posts_img', blank=True)
+	story = RichTextField()
 	start_date= models.DateField()
 	end_date = models.DateField(blank=True)
 	location = PlacesField()
-	#location = map_fields.AddressField(max_length=200)
-	#geolocation = map_fields.GeoLocationField(max_length=100)
 	date_posted = models.DateTimeField(default=timezone.now)
 	user_name = models.ForeignKey(User, on_delete=models.CASCADE)
 	tags = models.CharField(max_length=100, blank=True)
-	#formfield_overrides = {
-	 # 	 map_fields.AddressField: { 'widget':
-      #	 map_widgets.GoogleMapsAddressWidget(attrs={
-     	# 	'data-autocomplete-options': json.dumps({ 'types': ['geocode',
-      	#	'establishment'], 'componentRestrictions': {
-         #         		'country': 'us'
-          #  		 }
-         	#	})
-      		#})
-   		 #},
-  	#}
+	
 
 	def __str__(self):
 		return self.title

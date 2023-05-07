@@ -33,19 +33,17 @@
             >Posted on {{ post.date_posted }}</small
           >
           <br /><br />
+          <a href="{% url 'post-detail' post.id %}"> 
           <b class="card-text text-dark">{{ post.title }}</b>
-          <p class="card-text text-dark">{{ post.story }}</p>
-          <b class="card-text text-dark">{{ post.date }}</b>
-        </div>
-        <a href="{% url 'post-detail' post.id %}"
-          >
-          {% if post.media %}
-          <img class="card-img-top" src="{{post.media.url}}" alt=""
-        />
-          {% endif %}
           </a>
+          <div style="height:164px; text-overflow: ellipsis; overflow: hidden;">
+          <p class="card-text text-dark">{{ post.story|safe }}</p>
+          </div>
+          <br />
+          <b class="card-text text-dark">{{ post.start_date }}</b>
+          <p class="card-text text-dark">{{ post.location }}</p>
+        </div>
         {% if post.tags %}
-        <br />
         <p class="text-danger ml-3">
           <b>Tags: <i>{{ post.tags }}</i></b>
         </p>

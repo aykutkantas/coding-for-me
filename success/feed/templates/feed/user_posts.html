@@ -34,16 +34,11 @@
           >
           <br /><br />
           <b class="card-text text-dark">{{ post.title }}</b>
-          <p class="card-text text-dark">{{ post.story }}</p>
-          <b class="card-text text-dark">{{ post.date }}</b>
+          <p class="card-text text-dark">{{ post.story|safe }}</p>
+          <br />
+          <b class="card-text text-dark">{{ post.start_date }}</b>
+          <p class="card-text text-dark">{{ post.location }}</p>
         </div>
-        <a href="{% url 'post-detail' post.id %}"
-          >
-          {% if post.media %}
-          <img class="card-img-top" src="{{post.media.url}}" alt=""
-        />
-          {% endif %}
-        </a>
         {% if post.tags %}
         <br />
         <p class="text-danger ml-3">
