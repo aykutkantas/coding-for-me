@@ -4,12 +4,18 @@ from django.urls import reverse
 from django.utils import timezone
 from places.fields import PlacesField
 from ckeditor.fields import RichTextField
+from django.db.models import F, Q, When
+
 
 # This model is for any post that a user posts on the website.
 class Post(models.Model):
 	title = models.CharField(max_length=255)
 	story = RichTextField()
+	CHOICE = [(1, 'Exact_Date'), (2, 'Month'), (3, 'Year'), (4, 'Season'),]
+	start_date_format=models.CharField(choices=CHOICE, default=1)
+	#start_date=When(start_date_format=1, then=models.DateField()) 
 	start_date= models.DateField()
+	end_date_format=models.CharField(blank=True, choices=CHOICE)
 	end_date = models.DateField(blank=True)
 	location = PlacesField()
 	date_posted = models.DateTimeField(default=timezone.now)
