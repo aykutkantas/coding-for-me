@@ -36,12 +36,16 @@
             >Posted on {{ post.date_posted }}</small
           >
           <br /><br />
-          <b class="card-text text-dark">{{ post.title }}</b>
-          <p class="card-text text-dark">{{ post.story|safe }}</p>
-          <br />
-          <b class="card-text text-dark">{{ post.start_date }}</b>
-          <p class="card-text text-dark">{{ post.location }}</p>
-        </div>
+          <a href="{% url 'post-detail' post.id %}"> 
+            <b class="card-text text-dark">{{ post.title }}</b>
+            </a>
+            <div style="height:164px; text-overflow: ellipsis; overflow: hidden;">
+            <p class="card-text text-dark">{{ post.story|safe }}</p>
+            </div>
+            <br />
+            <b class="card-text text-dark">{{ post.start_date }}</b>
+            <p class="card-text text-dark">{{ post.location }}</p>
+          </div>
         {% if post.tags %}
         <br />
         <p class="text-danger ml-3">
