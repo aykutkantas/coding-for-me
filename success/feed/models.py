@@ -13,7 +13,7 @@ class Post(models.Model):
 	story = RichTextField()
 	CHOICE = (('1', 'Exact Date'), ('2', 'Month'), ('3', 'Year'), ('4', 'Season'))
 	start_date_format=models.CharField(choices=CHOICE, default=1)
-	start_date= models.CharField()
+	start_date= models.CharField(blank=True)
 	end_date_format=models.CharField(blank=True, choices=CHOICE)
 	end_date = models.DateField(blank=True)
 	location = PlacesField()
@@ -41,3 +41,11 @@ class Comments(models.Model):
 class Like(models.Model):
 	user = models.ForeignKey(User, related_name='likes', on_delete=models.CASCADE)
 	post = models.ForeignKey(Post, related_name='likes', on_delete=models.CASCADE)
+
+
+
+
+
+
+
+
