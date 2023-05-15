@@ -39,5 +39,106 @@
     </div>
   </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+  var startDateFormatSelect = $('#id_start_date_format');
+  var startDateField = $('#id_start_date');
+  var monthDropdown = $('<select>').attr('name', 'month').hide();
+  var yearDropdown = $('<select>').attr('name', 'year').hide();
+  var seasonDropdown = $('<select>').attr('name', 'season').hide();
+
+  function showDateField() {
+    startDateField.attr('type', 'date');
+    startDateField.show();
+    monthDropdown.hide();
+    yearDropdown.hide();
+    seasonDropdown.hide();
+  }
+
+  function showMonthDropdown() {
+    startDateField.hide();
+    monthDropdown.show();
+    yearDropdown.hide();
+    seasonDropdown.hide();
+  }
+
+  function showYearDropdown() {
+    startDateField.hide();
+    monthDropdown.hide();
+    yearDropdown.show();
+    seasonDropdown.hide();
+  }
+
+  function showSeasonDropdown() {
+    startDateField.hide();
+    monthDropdown.hide();
+    yearDropdown.hide();
+    seasonDropdown.show();
+  }
+
+  function populateDropdown(dropdown, options) {
+    dropdown.empty();
+    for (var i = 0; i < options.length; i++) {
+      var option = $('<option>').text(options[i]).val(i + 1);
+      dropdown.append(option);
+    }
+  }
+
+  function setStartDateDisplay(selectedValue) {
+    if (selectedValue === '1') {
+      showDateField();
+    } else if (selectedValue === '2') {
+      showMonthDropdown();
+    } else if (selectedValue === '3') {
+      showYearDropdown();
+    } else if (selectedValue === '4') {
+      showSeasonDropdown();
+    } else {
+      startDateField.hide();
+      monthDropdown.hide();
+      yearDropdown.hide();
+      seasonDropdown.hide();
+    }
+  }
+
+  // Set initial visibility and widget type based on default value
+  setStartDateDisplay(startDateFormatSelect.val());
+
+  // Handle visibility and widget type on select change
+  startDateFormatSelect.on('change', function() {
+    var selectedValue = $(this).val();
+    setStartDateDisplay(selectedValue);
+  });
+
+  // Append the month dropdown to the form
+  startDateField.after(monthDropdown);
+
+  // Append the year dropdown to the form
+  startDateField.after(yearDropdown);
+
+  // Append the season dropdown to the form
+  startDateField.after(seasonDropdown);
+
+  // Populate month dropdown with options
+  var monthOptions = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ];
+  populateDropdown(monthDropdown, monthOptions);
+
+  // Populate year dropdown with options
+  var currentYear = new Date().getFullYear();
+  var yearOptions = [];
+  for (var i = currentYear; i >= currentYear - 100; i--) {
+    yearOptions.push(i.toString());
+  }
+  populateDropdown(yearDropdown, yearOptions);
+
+  // Populate season dropdown with options
+  var seasonOptions = ['Spring', 'Summer', 'Autumn', 'Winter'];
+  populateDropdown(seasonDropdown, seasonOptions);
+});
+</script>
 
 {% endblock content %} {% block jsfiles %}{% endblock jsfiles %}

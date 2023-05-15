@@ -11,10 +11,9 @@ from django.db.models import F, Q, When
 class Post(models.Model):
 	title = models.CharField(max_length=255)
 	story = RichTextField()
-	CHOICE = [(1, 'Exact_Date'), (2, 'Month'), (3, 'Year'), (4, 'Season'),]
+	CHOICE = (('1', 'Exact Date'), ('2', 'Month'), ('3', 'Year'), ('4', 'Season'))
 	start_date_format=models.CharField(choices=CHOICE, default=1)
-	#start_date=When(start_date_format=1, then=models.DateField()) 
-	start_date= models.DateField()
+	start_date= models.CharField()
 	end_date_format=models.CharField(blank=True, choices=CHOICE)
 	end_date = models.DateField(blank=True)
 	location = PlacesField()
