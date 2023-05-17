@@ -14,7 +14,7 @@ class Post(models.Model):
 	CHOICE = (
 		('1', 'Exact Date'), 
 		('2', 'Month'), 
-		('3', 'Year'), 
+		('3', 'Decade'), 
 		('4', 'Season')
 	)
 	date_format=models.CharField(choices=CHOICE, default=1)

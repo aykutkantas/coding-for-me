@@ -35,7 +35,7 @@
                 var seasonDropdown = $('<select>').attr('name', 'season').hide();
 
                 function showDateField() {
-                  DateField.attr('type', 'date');
+                  DateField.attr('type', 'datetime-local');
                   DateField.show();
                   monthDropdown.hide();
                   yearDropdown.hide();
@@ -104,11 +104,13 @@
 
                 // Populate year dropdown with options
                 var currentYear = new Date().getFullYear();
-                var yearOptions = [];
-                for (var i = currentYear; i >= currentYear - 100; i--) {
-                  yearOptions.push(i.toString());
+                var decadeOptions = [];
+                for (var i = currentYear; i >= currentYear - 100; i -= 10) {
+                  var decadeStart = i - (i % 10);
+                  var decadeLabel = `${decadeStart}s`;
+                  decadeOptions.push(decadeLabel);
                 }
-                populateDropdown(yearDropdown, yearOptions);
+                populateDropdown(yearDropdown, decadeOptions);
 
                 // Populate season dropdown with options
                 var seasonOptions = ['Spring', 'Summer', 'Autumn', 'Winter'];
@@ -125,8 +127,11 @@
                 });
 
                 yearDropdown.on('change', function() {
-                  var selectedYear = $(this).val();
-                  DateField.val(selectedYear);
+                  var selectedDecade = $(this).val();
+                  var startYear = parseInt(selectedDecade);
+                  var endYear = startYear + 9;
+                  var formattedDate = `${startYear}-01-01`;
+                  DateField.val(formattedDate);
                 });
 
                 seasonDropdown.on('change', function() {
