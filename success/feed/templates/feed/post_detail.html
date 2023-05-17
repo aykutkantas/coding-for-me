@@ -38,6 +38,7 @@
           <br />
           <b class="card-text text-dark">{{ post.date }}</b>
           <p class="card-text text-dark">{{ post.location }}</p>
+          <div id="map" style="height: 300px;"></div> <!-- Map container --></div>
         </div>
         {% if post.tags %}
         <br />
@@ -162,6 +163,33 @@
       },
     });
   });
+</script>
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDlmWzOETT386SR5lq2ADFMvsejrrycmoE"></script>
+<script>
+  function initMap() {
+    var geocoder = new google.maps.Geocoder();
+    var address = "{{ post.location }}"; // Get the location from the post
+
+    geocoder.geocode({ address: address }, function (results, status) {
+      if (status === google.maps.GeocoderStatus.OK) {
+        var mapOptions = {
+          center: results[0].geometry.location,
+          zoom: 14
+        };
+
+        var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+        var marker = new google.maps.Marker({
+          map: map,
+          position: results[0].geometry.location
+        });
+      } else {
+        console.error("Geocode was not successful for the following reason: " + status);
+      }
+    });
+  }
+  google.maps.event.addDomListener(window, 'load', initMap);
 </script>
 
 {% endblock jsfiles %}
