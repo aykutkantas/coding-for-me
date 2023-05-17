@@ -78,7 +78,7 @@ def create_post(request):
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 	model = Post
-	fields = ['title', 'story', 'start_date', 'end_date', 'location', 'tags']
+	fields = ['title', 'story', 'date', 'end_date', 'location', 'tags']
 	template_name = 'feed/create_post.html'
 
 	def form_valid(self, form):
@@ -102,7 +102,7 @@ def post_delete(request, pk):
 @login_required
 def search_posts(request):
 	query = request.GET.get('p')
-	object_list = Post.objects.filter(tags__icontains=query) | Post.objects.filter(title__icontains=query) | Post.objects.filter(location__icontains=query) | Post.objects.filter(start_date__icontains=query) | Post.objects.filter(end_date__icontains=query)
+	object_list = Post.objects.filter(tags__icontains=query) | Post.objects.filter(title__icontains=query) | Post.objects.filter(location__icontains=query) | Post.objects.filter(date__icontains=query) | Post.objects.filter(end_date__icontains=query)
 	liked = [i for i in object_list if Like.objects.filter(user = request.user, post=i)]
 	context ={
 		'posts': object_list,

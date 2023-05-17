@@ -1,16 +1,15 @@
-{% extends "feed/layout.html" %} {% load static %} {% load crispy_forms_tags %}
+{% extends "feed/layout.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
 {% block searchform %}
-<form
-  class="form-inline my-2 my-lg-0 ml-5"
-  action="{% url 'search_posts' %}"
-  method="get"
->
+<form class="form-inline my-2 my-lg-0 ml-5" action="{% url 'search_posts' %}" method="get">
   <input name="p" type="text" placeholder="Search posts.." />
-  <button class="btn btn-success my-2 my-sm-0 ml-4" type="submit">
-    Search
-  </button>
+  <button class="btn btn-success my-2 my-sm-0 ml-4" type="submit">Search</button>
 </form>
-{% endblock searchform %} {% block content %}
+{% endblock searchform %}
+
+{% block content %}
 <br /><br />
 <div class="container">
   <div class="row">
@@ -29,36 +28,36 @@
             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
             <script>
               $(document).ready(function() {
-                var startDateFormatSelect = $('#id_start_date_format');
-                var startDateField = $('#id_start_date');
+                var DateFormatSelect = $('#id_date_format');
+                var DateField = $('#id_date');
                 var monthDropdown = $('<select>').attr('name', 'month').hide();
                 var yearDropdown = $('<select>').attr('name', 'year').hide();
                 var seasonDropdown = $('<select>').attr('name', 'season').hide();
 
                 function showDateField() {
-                  startDateField.attr('type', 'date');
-                  startDateField.show();
+                  DateField.attr('type', 'date');
+                  DateField.show();
                   monthDropdown.hide();
                   yearDropdown.hide();
                   seasonDropdown.hide();
                 }
 
                 function showMonthDropdown() {
-                  startDateField.hide();
+                  DateField.hide();
                   monthDropdown.show();
                   yearDropdown.hide();
                   seasonDropdown.hide();
                 }
 
                 function showYearDropdown() {
-                  startDateField.hide();
+                  DateField.hide();
                   monthDropdown.hide();
                   yearDropdown.show();
                   seasonDropdown.hide();
                 }
 
                 function showSeasonDropdown() {
-                  startDateField.hide();
+                  DateField.hide();
                   monthDropdown.hide();
                   yearDropdown.hide();
                   seasonDropdown.show();
@@ -72,7 +71,7 @@
                   }
                 }
 
-                function setStartDateDisplay(selectedValue) {
+                function setDateDisplay(selectedValue) {
                   if (selectedValue === '1') {
                     showDateField();
                   } else if (selectedValue === '2') {
@@ -82,18 +81,18 @@
                   } else if (selectedValue === '4') {
                     showSeasonDropdown();
                   } else {
-                    startDateField.hide();
+                    DateField.hide();
                     monthDropdown.hide();
                     yearDropdown.hide();
                     seasonDropdown.hide();
                   }
                 }
 
-                setStartDateDisplay(startDateFormatSelect.val());
+                setDateDisplay(DateFormatSelect.val());
 
-                startDateFormatSelect.on('change', function() {
+                DateFormatSelect.on('change', function() {
                   var selectedValue = $(this).val();
-                  setStartDateDisplay(selectedValue);
+                  setDateDisplay(selectedValue);
                 });
 
                 // Populate month dropdown with options
@@ -115,44 +114,35 @@
                 var seasonOptions = ['Spring', 'Summer', 'Autumn', 'Winter'];
                 populateDropdown(seasonDropdown, seasonOptions);
 
-                startDateField.after(monthDropdown);
-                startDateField.after(yearDropdown);
-                startDateField.after(seasonDropdown);
+                DateField.after(monthDropdown);
+                DateField.after(yearDropdown);
+                DateField.after(seasonDropdown);
 
-                // Save the selected value to the start_date field
+                // Save the selected value to the date field
                 monthDropdown.on('change', function() {
                   var selectedMonth = $(this).val();
-                  startDateField.val(selectedMonth);
+                  DateField.val(selectedMonth);
                 });
 
                 yearDropdown.on('change', function() {
                   var selectedYear = $(this).val();
-                  startDateField.val(selectedYear);
+                  DateField.val(selectedYear);
                 });
 
                 seasonDropdown.on('change', function() {
                   var selectedSeason = $(this).val();
-                  startDateField.val(selectedSeason);
+                  DateField.val(selectedSeason);
                 });
-              });
-           </script> 
-          
-            <div class="form-group">
-              <button
-                class="btn btn-lg btn-primary btn-block text-uppercase"
-                type="submit"
-              >
-                Post</button
-              ><br />
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-{% endblock content %} {% block jsfiles %}{% endblock jsfiles %}
+                });
+                </script> 
 
-
-
-
+                <div class="form-group">
+                  <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Post</button><br />
+                </div>
+                </form>
+                </div>
+                </div>
+                </div>
+                </div>
+                {% endblock content %}
+                {% block jsfiles %}{% endblock jsfiles %}
