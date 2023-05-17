@@ -13,9 +13,8 @@ class Post(models.Model):
 	story = RichTextField()
 	CHOICE = (
 		('1', 'Exact Date'), 
-		('2', 'Month'), 
-		('3', 'Decade'), 
-		('4', 'Season')
+		('2', 'Season'),
+		('3', 'Decade') 
 	)
 	date_format=models.CharField(choices=CHOICE, default=1)
 	date= models.CharField(blank=True)

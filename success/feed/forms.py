@@ -22,19 +22,13 @@ class NewPostForm(forms.ModelForm):
             # Date format, no additional validation needed
             return date
         elif date_format == '2':
-            # Month format, set the selected month as the date value
-            month = self.cleaned_data.get('month')
-            year = self.cleaned_data.get('year')
-            return f'{year}-{month}-01'
+             # Season format, set the selected season as the date value
+            season = self.cleaned_data.get('season')
+            return season
         elif date_format == '3':
             # Year format, set the selected year as the date value
             year = self.cleaned_data.get('year')
             return f'{year}-01-01'
-        elif date_format == '4':
-            # Season format, set the selected season as the date value
-            season = self.cleaned_data.get('season')
-            return season
-
         return date
 
 

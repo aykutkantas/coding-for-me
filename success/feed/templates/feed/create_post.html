@@ -30,7 +30,6 @@
               $(document).ready(function() {
                 var DateFormatSelect = $('#id_date_format');
                 var DateField = $('#id_date');
-                var monthDropdown = $('<select>').attr('name', 'month').hide();
                 var decadeDropdown = $('<select>').attr('name', 'year').hide();
                 var seasonDropdown = $('<select>').attr('name', 'season').hide();
                 var yearDropdown = $('<select>').attr('name', 'year').hide();
@@ -38,23 +37,13 @@
                 function showDateField() {
                   DateField.attr('type', 'datetime-local');
                   DateField.show();
-                  monthDropdown.hide();
                   decadeDropdown.hide();
                   seasonDropdown.hide();
                   yearDropdown.hide();
                 }
-
-                function showMonthDropdown() {
-                  DateField.hide();
-                  monthDropdown.show();
-                  decadeDropdown.hide();
-                  seasonDropdown.hide();
-                  yearDropdown.hide();
-                }
-
+          
                 function showDecadeDropdown() {
                   DateField.hide();
-                  monthDropdown.hide();
                   decadeDropdown.show();
                   seasonDropdown.hide();
                   yearDropdown.hide();
@@ -62,7 +51,6 @@
 
                 function showSeasonDropdown() {
                   DateField.hide();
-                  monthDropdown.hide();
                   decadeDropdown.hide();
                   seasonDropdown.show();
                   yearDropdown.show();
@@ -80,14 +68,11 @@
                   if (selectedValue === '1') {
                     showDateField();
                   } else if (selectedValue === '2') {
-                    showMonthDropdown();
+                    showSeasonDropdown();
                   } else if (selectedValue === '3') {
                     showDecadeDropdown();
-                  } else if (selectedValue === '4') {
-                    showSeasonDropdown();
                   } else {
                     DateField.hide();
-                    monthDropdown.hide();
                     decadeDropdown.hide();
                     yearDropdown.hide();
                     seasonDropdown.hide();
@@ -100,13 +85,6 @@
                   var selectedValue = $(this).val();
                   setDateDisplay(selectedValue);
                 });
-
-                // Populate month dropdown with options
-                var monthOptions = [
-                  'January', 'February', 'March', 'April', 'May', 'June',
-                  'July', 'August', 'September', 'October', 'November', 'December'
-                ];
-                populateDropdown(monthDropdown, monthOptions);
 
                 // Populate decade dropdown with options
                 var currentYear = new Date().getFullYear();
@@ -130,17 +108,11 @@
                 var seasonOptions = ['Spring', 'Summer', 'Autumn', 'Winter'];
                 populateDropdown(seasonDropdown, seasonOptions);
 
-                DateField.after(monthDropdown);
                 DateField.after(decadeDropdown);
                 DateField.after(seasonDropdown);
                 DateField.after(yearDropdown);
 
                 // Save the selected value to the date field
-                monthDropdown.on('change', function() {
-                  var selectedMonth = $(this).val();
-                  DateField.val(selectedMonth);
-                });
-
                 decadeDropdown.on('change', function() {
                   var selectedDecade = $(this).val();
                   var startYear = parseInt(selectedDecade);
