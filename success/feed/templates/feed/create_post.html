@@ -17,6 +17,124 @@
       <div class="card card-signin my-5">
         <div class="card-body">
           <h5 class="card-title text-center"><b>Post</b></h5>
+
+                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                <script>
+                  $(document).ready(function() {
+                    var DateFormatSelect = $('#id_date_format');
+                    var DateField = $('#id_date');
+                    var decadeDropdown = $('<select>').attr('name', 'year').hide();
+                    var seasonDropdown = $('<select>').attr('name', 'season').hide();
+                    var yearDropdown = $('<select>').attr('name', 'year').hide();
+                    var SeasonField = $('#id_season');
+                    var YearField = $('#id_year');
+    
+                    function showDateField() {
+                      DateField.attr('type', 'datetime-local');
+                      DateField.show();
+                      decadeDropdown.hide();
+                      seasonDropdown.hide();
+                      yearDropdown.hide();
+                    }
+              
+                    function showDecadeDropdown() {
+                      DateField.hide();
+                      decadeDropdown.show();
+                      seasonDropdown.hide();
+                      yearDropdown.hide();
+                    }
+    
+                    function showSeasonDropdown() {
+                      DateField.hide();
+                      decadeDropdown.hide();
+                      seasonDropdown.show();
+                      yearDropdown.show();
+                    }
+    
+                    function populateDropdown(dropdown, options) {
+                      dropdown.empty();
+                      for (var i = 0; i < options.length; i++) {
+                        var option = $('<option>').text(options[i]).val(options[i]);
+                        dropdown.append(option);
+                      }
+                    }
+    
+                    function setDateDisplay(selectedValue) {
+                      if (selectedValue === '1') {
+                        showDateField();
+                      } else if (selectedValue === '2') {
+                        showSeasonDropdown();
+                      } else if (selectedValue === '3') {
+                        showDecadeDropdown();
+                      } else {
+                        DateField.hide();
+                        decadeDropdown.hide();
+                        yearDropdown.hide();
+                        seasonDropdown.hide();
+                      }
+                      // Set initial values for season and year fields
+                      SeasonField.val('');
+                      YearField.val('');
+                    }
+    
+                    setDateDisplay(DateFormatSelect.val());
+    
+                    DateFormatSelect.on('change', function() {
+                      var selectedValue = $(this).val();
+                      setDateDisplay(selectedValue);
+                    });
+    
+                    // Populate decade dropdown with options
+                    var currentYear = new Date().getFullYear();
+                    var decadeOptions = [];
+                    for (var i = currentYear; i >= currentYear - 220; i -= 10) {
+                      var decadeStart = i - (i % 10);
+                      var decadeLabel = `${decadeStart}s`;
+                      decadeOptions.push(decadeLabel);
+                    }
+                    populateDropdown(decadeDropdown, decadeOptions);
+    
+                    // Populate year dropdown with options      
+                    var thisyear = new Date().getFullYear();
+                    var yearOptions = [];
+                    for (var i = thisyear; i >= thisyear - 100; i--) {
+                      yearOptions.push(i.toString());
+                    }
+                    populateDropdown(yearDropdown, yearOptions);
+    
+                    // Populate season dropdown with options
+                    var seasonOptions = ['Spring', 'Summer', 'Autumn', 'Winter'];
+                    populateDropdown(seasonDropdown, seasonOptions);
+    
+                    DateField.after(decadeDropdown);
+                    DateField.after(seasonDropdown);
+                    DateField.after(yearDropdown);
+    
+                    // Save the selected value to the date field
+                    decadeDropdown.on('change', function() {
+                      var selectedDecade = $(this).val();
+                      var startYear = parseInt(selectedDecade);
+                      var endYear = startYear + 9;
+                      var formattedDate = `${startYear}-01-01`;
+                      DateField.val(formattedDate);
+                      YearField.val(selectedDecade);
+                    });
+
+                    yearDropdown.on('change', function() {
+                      var selectedYear = $(this).val();
+                      DateField.val(selectedYear);
+                      YearField.val(selectedYear);
+                    });
+
+                    seasonDropdown.on('change', function() {
+                      var selectedSeason = $(this).val();
+                      DateField.val(selectedSeason);
+                      SeasonField.val(selectedSeason);
+                      YearField.val('');
+                    });
+                  });
+                </script>
+
           <form class="form-signin" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <fieldset class="form-group">
@@ -24,122 +142,36 @@
               {{ form|crispy }}
               {{ form.media }}
             </fieldset>
-
-            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-            <script>
-              $(document).ready(function() {
-                var DateFormatSelect = $('#id_date_format');
-                var DateField = $('#id_date');
-                var decadeDropdown = $('<select>').attr('name', 'year').hide();
-                var seasonDropdown = $('<select>').attr('name', 'season').hide();
-                var yearDropdown = $('<select>').attr('name', 'year').hide();
-
-                function showDateField() {
-                  DateField.attr('type', 'datetime-local');
-                  DateField.show();
-                  decadeDropdown.hide();
-                  seasonDropdown.hide();
-                  yearDropdown.hide();
-                }
-          
-                function showDecadeDropdown() {
-                  DateField.hide();
-                  decadeDropdown.show();
-                  seasonDropdown.hide();
-                  yearDropdown.hide();
-                }
-
-                function showSeasonDropdown() {
-                  DateField.hide();
-                  decadeDropdown.hide();
-                  seasonDropdown.show();
-                  yearDropdown.show();
-                }
-
-                function populateDropdown(dropdown, options) {
-                  dropdown.empty();
-                  for (var i = 0; i < options.length; i++) {
-                    var option = $('<option>').text(options[i]).val(options[i]);
-                    dropdown.append(option);
-                  }
-                }
-
-                function setDateDisplay(selectedValue) {
-                  if (selectedValue === '1') {
-                    showDateField();
-                  } else if (selectedValue === '2') {
-                    showSeasonDropdown();
-                  } else if (selectedValue === '3') {
-                    showDecadeDropdown();
-                  } else {
-                    DateField.hide();
-                    decadeDropdown.hide();
-                    yearDropdown.hide();
-                    seasonDropdown.hide();
-                  }
-                }
-
-                setDateDisplay(DateFormatSelect.val());
-
-                DateFormatSelect.on('change', function() {
-                  var selectedValue = $(this).val();
-                  setDateDisplay(selectedValue);
-                });
-
-                // Populate decade dropdown with options
-                var currentYear = new Date().getFullYear();
-                var decadeOptions = [];
-                for (var i = currentYear; i >= currentYear - 220; i -= 10) {
-                  var decadeStart = i - (i % 10);
-                  var decadeLabel = `${decadeStart}s`;
-                  decadeOptions.push(decadeLabel);
-                }
-                populateDropdown(decadeDropdown, decadeOptions);
-
-                // Populate year dropdown with options      
-                var thisyear = new Date().getFullYear();
-                var yearOptions = [];
-                for (var i = thisyear; i >= thisyear - 100; i--) {
-                  yearOptions.push(i.toString());
-                }
-                populateDropdown(yearDropdown, yearOptions);
-
-                // Populate season dropdown with options
-                var seasonOptions = ['Spring', 'Summer', 'Autumn', 'Winter'];
-                populateDropdown(seasonDropdown, seasonOptions);
-
-                DateField.after(decadeDropdown);
-                DateField.after(seasonDropdown);
-                DateField.after(yearDropdown);
-
-                // Save the selected value to the date field
-                decadeDropdown.on('change', function() {
-                  var selectedDecade = $(this).val();
-                  var startYear = parseInt(selectedDecade);
-                  var endYear = startYear + 9;
-                  var formattedDate = `${startYear}-01-01`;
-                  DateField.val(formattedDate);
-                });
-
-                yearDropdown.on('change', function() {
-                  var selectedYear = $(this).val();
-                  DateField.val(selectedYear);
-                });
-
-                seasonDropdown.on('change', function() {
-                  var selectedSeason = $(this).val();
-                  DateField.val(selectedSeason);
-                });
-                });
-                </script> 
-
                 <div class="form-group">
                   <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Post</button><br />
                 </div>
-                </form>
-                </div>
-                </div>
-                </div>
-                </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
                 {% endblock content %}
-                {% block jsfiles %}{% endblock jsfiles %}
+                {% block jsfiles %}
+                  <script>
+                    function handleDateFormatChange() {
+                        var dateFormatSelect = document.getElementById('id_date_format');
+                        var dateField = document.getElementById('id_date');
+                        var seasonDropdown = document.getElementById('id_season');
+                        var yearDropdown = document.getElementById('id_year');
+                
+                        if (dateFormatSelect.value === '2') {
+                            dateField.style.display = 'none';
+                            seasonDropdown.style.display = 'inline-block';
+                            yearDropdown.style.display = 'inline-block';
+                        } else if (dateFormatSelect.value === '3') {
+                            dateField.style.display = 'none';
+                            seasonDropdown.style.display = 'none';
+                            yearDropdown.style.display = 'inline-block';
+                        } else {
+                            dateField.style.display = 'block';
+                            seasonDropdown.style.display = 'none';
+                            yearDropdown.style.display = 'none';
+                        }
+                    }
+                  </script>
+                {% endblock jsfiles %}

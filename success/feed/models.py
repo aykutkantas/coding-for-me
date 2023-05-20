@@ -17,7 +17,7 @@ class Post(models.Model):
 		('3', 'Decade') 
 	)
 	date_format=models.CharField(choices=CHOICE, default=1)
-	date= models.CharField(blank=True)
+	date= models.CharField(max_length=50, blank=True)
 	end_date_format=models.CharField(blank=True, choices=CHOICE)
 	end_date = models.DateField(blank=True)
 	location = PlacesField()

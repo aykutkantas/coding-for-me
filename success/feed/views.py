@@ -68,6 +68,7 @@ def create_post(request):
 		form = NewPostForm(request.POST, request.FILES)
 		if form.is_valid():
 			data = form.save(commit=False)
+			data.date=form.cleaned_data['date']
 			data.user_name = user
 			data.save()
 			messages.success(request, f'Posted Successfully')

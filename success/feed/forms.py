@@ -8,29 +8,44 @@ class NewCommentForm(forms.ModelForm):
 		fields = ['comment']
 
 class NewPostForm(forms.ModelForm):
+
     class Meta:
         model = Post
         fields = ['title', 'story', 'date_format', 'date', 'end_date_format', 'end_date', 'location', 'tags']
         widgets = {
             'end_date': forms.DateInput(attrs={'type': 'date'}),
-        }
-    def clean_date(self):
-        date_format = self.cleaned_data.get('date_format')
-        date = self.cleaned_data.get('date')
+        }  
+    def clean(self):
+        cleaned_data = super().clean()
+        date_format = cleaned_data.get('date_format')
 
-        if date_format == '1':
-            # Date format, no additional validation needed
-            return date
-        elif date_format == '2':
-             # Season format, set the selected season as the date value
-            season = self.cleaned_data.get('season')
-            return season
+        if date_format == '2':
+            season = cleaned_data.get('season')
+            year = cleaned_data.get('year')
+            if season and year:
+                cleaned_data['date'] = f"{year} {season}"
         elif date_format == '3':
-            # Year format, set the selected year as the date value
+            decade = cleaned_data.get('year')
+            if decade:
+                cleaned_data['date'] = f"{decade}s"
+
+        return cleaned_data
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        date_format = self.cleaned_data.get('date_format')
+
+        if date_format == '2':
+            season = self.cleaned_data.get('season')
             year = self.cleaned_data.get('year')
-            return f'{year}-01-01'
-        return date
+            if season and year:
+                instance.date = f"{year} {season}"
+        elif date_format == '3':
+            decade = self.cleaned_data.get('year')
+            if decade:
+                instance.date = f"{decade}s"
 
+        if commit:
+            instance.save()
 
-
-
+        return instance

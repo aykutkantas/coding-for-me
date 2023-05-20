@@ -44,6 +44,9 @@ INSTALLED_APPS = [
     'django_google_maps',
     'ckeditor',
     'ckeditor_uploader',
+    'todo', 
+    'dal',
+    'dal_select2',
 ]
 
 MIDDLEWARE = [
@@ -88,7 +91,15 @@ DATABASES={
       'PASSWORD':'918273645cantas',
       'HOST':'localhost',
       'PORT':'5432',
-   }
+   },
+    'test':{
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'test',
+        'USER': 'postgres',
+        'PASSWORD': '918273645cantas',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    },
 }
 
 
