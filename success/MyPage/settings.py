@@ -1,6 +1,7 @@
 import os
 from django.conf import settings
 import django_heroku
+import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -19,9 +20,12 @@ SECRET_KEY = '1342aykut'
 DEBUG = 'True'
 
 
-ALLOWED_HOSTS = [
-    'localhost',
-]
+#ALLOWED_HOSTS = [
+ #   'localhost',
+  #  'djangott.eba-stksx35z.us-west-2.elasticbeanstalk.com',  
+#]
+
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -139,6 +143,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+django_heroku.settings(locals())
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
@@ -184,3 +190,6 @@ CKEDITOR_IMAGE_BACKEND = 'pillow'
 
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 524288056565665
+
+AWS_SECRET_ACCESS_KEY = 'AKIAVGSHBBFFOS3JLAFC'
+
