@@ -2,9 +2,10 @@ import os
 from django.conf import settings
 import django_heroku
 import dj_database_url
-
+from pathlib import Path
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+#BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -21,7 +22,7 @@ DEBUG = 'True'
 
 
 #ALLOWED_HOSTS = [
- #   'localhost',
+    #'localhost',
   #  'djangott.eba-stksx35z.us-west-2.elasticbeanstalk.com',  
 #]
 
@@ -88,23 +89,34 @@ WSGI_APPLICATION = 'MyPage.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES={
+   #'default': {
+   #'ENGINE': 'django.db.backends.sqlite3',
+        #'NAME': BASE_DIR / 'db.sqlite3',
+   #}
+#} 
    'default':{
-      'ENGINE':'django.db.backends.postgresql_psycopg2',
-      'NAME':'postgres',
-      'USER':'postgres',
-      'PASSWORD':'918273645cantas',
-      'HOST':'localhost',
-      'PORT':'5432',
-   },
-    'test':{
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'test',
-        'USER': 'postgres',
-        'PASSWORD': '918273645cantas',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    },
+      'ENGINE': 'django.db.backends.sqlite3',
+      #'NAME': os.path.join(BASE_DIR , 'db.sqlite3'),
+      'NAME': BASE_DIR / 'db.sqlite3',
+   }
 }
+      #'ENGINE':'django.db.backends.postgresql_psycopg2',
+      #'ENGINE':'django.db.backends.postgresql',
+      #'NAME':'postgres',
+      #'USER':'postgres',
+      #'PASSWORD':'918273645cantas',
+      #'HOST':'localhost',
+      #'PORT':5432,     
+
+    #'test':{
+     #   'ENGINE': 'django.db.backends.postgresql_psycopg2',
+      #  'NAME': 'test',
+       # 'USER': 'postgres',
+        #'PASSWORD': '918273645cantas',
+        #'HOST': 'localhost',
+        #'PORT': 5432,
+    #},
+
 
 
 # Password validation
@@ -190,6 +202,4 @@ CKEDITOR_IMAGE_BACKEND = 'pillow'
 
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 524288056565665
-
-AWS_SECRET_ACCESS_KEY = 'AKIAVGSHBBFFOS3JLAFC'
 

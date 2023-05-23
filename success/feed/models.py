@@ -16,10 +16,10 @@ class Post(models.Model):
 		('2', 'Season'),
 		('3', 'Decade') 
 	)
-	date_format=models.CharField(choices=CHOICE, default=1)
+	date_format=models.CharField(max_length=50, choices=CHOICE, default=1)
 	date= models.CharField(max_length=50, blank=True)
-	end_date_format=models.CharField(blank=True, choices=CHOICE)
-	end_date = models.DateField(blank=True)
+	end_date_format=models.CharField(max_length=50, blank=True, choices=CHOICE)
+	end_date = models.DateField(max_length=50, blank=True)
 	location = PlacesField()
 	date_posted = models.DateTimeField(default=timezone.now)
 	user_name = models.ForeignKey(User, on_delete=models.CASCADE)
