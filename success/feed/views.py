@@ -79,7 +79,7 @@ def create_post(request):
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 	model = Post
-	fields = ['title', 'story', 'date', 'end_date', 'location', 'tags']
+	fields = ['title', 'story', 'date_format', 'date', 'end_date_format', 'end_date', 'location', 'tags']
 	template_name = 'feed/create_post.html'
 
 	def form_valid(self, form):
