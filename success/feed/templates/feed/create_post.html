@@ -115,22 +115,26 @@
                       var selectedDecade = $(this).val();
                       var startYear = parseInt(selectedDecade);
                       var endYear = startYear + 9;
-                      var formattedDate = `${startYear}-01-01`;
+                      var formattedDate = `${startYear}s`;
                       DateField.val(formattedDate);
                       YearField.val(selectedDecade);
                     });
 
                     yearDropdown.on('change', function() {
                       var selectedYear = $(this).val();
-                      DateField.val(selectedYear);
+                      var selectedSeason = seasonDropdown.val();
+
+                      DateField.val(selectedYear + '-' + selectedSeason);
                       YearField.val(selectedYear);
                     });
 
                     seasonDropdown.on('change', function() {
+                      var selectedYear = yearDropdown.val();
                       var selectedSeason = $(this).val();
-                      DateField.val(selectedSeason);
+
+                      DateField.val(selectedYear + '-' + selectedSeason);
                       SeasonField.val(selectedSeason);
-                      YearField.val('');
+                      YearField.val(selectedYear);
                     });
                   });
                 </script>

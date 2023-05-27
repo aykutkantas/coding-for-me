@@ -1,16 +1,12 @@
-from django.conf import settings
 from django.shortcuts import get_object_or_404, render, redirect
-from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
-from django.urls import reverse
+from django.http import HttpResponse
 from django.contrib import messages
-from django.core.paginator import Paginator
 from django.contrib.auth.models import User
 from .forms import NewCommentForm, NewPostForm
 from django.views.generic import ListView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from .models import Post, Comments, Like
+from .models import Post, Like
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.http import require_POST
 import json
 
 class PostListView(ListView):
@@ -63,19 +59,20 @@ def post_detail(request, pk):
 
 @login_required
 def create_post(request):
-	user = request.user
-	if request.method == "POST":
-		form = NewPostForm(request.POST, request.FILES)
-		if form.is_valid():
-			data = form.save(commit=False)
-			data.date=form.cleaned_data['date']
-			data.user_name = user
-			data.save()
-			messages.success(request, f'Posted Successfully')
-			return redirect('home')
-	else:
-		form = NewPostForm()
-	return render(request, 'feed/create_post.html', {'form':form})
+    user = request.user
+    if request.method == "POST":
+        form = NewPostForm(request.POST, request.FILES)
+        if form.is_valid():
+            data = form.save(commit=False)
+            data.date=form.cleaned_data['date']
+            data.user_name = user
+            data.save()
+            messages.success(request, f'Posted Successfully')
+            return redirect('home')
+    else:
+        form = NewPostForm()
+    return render(request, 'feed/create_post.html', {'form':form})
+
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 	model = Post
