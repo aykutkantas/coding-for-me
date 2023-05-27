@@ -3,6 +3,7 @@ from django.conf import settings
 import django_heroku
 import dj_database_url
 from pathlib import Path
+from decouple import config
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 #BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -13,7 +14,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 #SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
-SECRET_KEY = '1342aykut'
+SECRET_KEY = config('SECRET_KEY')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -184,11 +185,11 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
 CLOUDINARY_STORAGE = {
 'CLOUD_NAME':'dbfmaljuh',
-'API_KEY': '376978896398661',
-'API_SECRET':'KrzQ85sllTsD3653LefJX_Y-yxk'
+'API_KEY': config('API_KEY'),
+'API_SECRET':config('API_SECRET')
 }
 
-PLACES_MAPS_API_KEY='AIzaSyDlmWzOETT386SR5lq2ADFMvsejrrycmoE'
+PLACES_MAPS_API_KEY=config('PLACES_MAPS_API_KEY')
 PLACES_MAP_WIDGET_HEIGHT=300
 PLACES_MAP_OPTIONS='{"center": { "lat": 38.971584, "lng": -95.235072 }, "zoom": 10}'
 PLACES_MARKER_OPTIONS='{"draggable": true}'
