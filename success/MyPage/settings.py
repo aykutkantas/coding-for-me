@@ -14,7 +14,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 #SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
-SECRET_KEY = config('SECRET_KEY')
+#SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = '1342aykut'
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -185,11 +186,14 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
 CLOUDINARY_STORAGE = {
 'CLOUD_NAME':'dbfmaljuh',
-'API_KEY': config('API_KEY'),
-'API_SECRET':config('API_SECRET')
+#'API_KEY': config('API_KEY'),
+#'API_SECRET':config('API_SECRET')
+'API_KEY':'376978896398661',
+'API_SECRET':'KrzQ85sllTsD3653LefJX_Y-yxk'
 }
 
-PLACES_MAPS_API_KEY=config('PLACES_MAPS_API_KEY')
+#PLACES_MAPS_API_KEY=config('PLACES_MAPS_API_KEY')
+PLACES_MAPS_API_KEY='AIzaSyDlmWzOETT386SR5lq2ADFMvsejrrycmoE'
 PLACES_MAP_WIDGET_HEIGHT=300
 PLACES_MAP_OPTIONS='{"center": { "lat": 38.971584, "lng": -95.235072 }, "zoom": 10}'
 PLACES_MARKER_OPTIONS='{"draggable": true}'
